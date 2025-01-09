@@ -10,7 +10,6 @@ namespace Trainingprogram.RepositoriesAbstractions.Chat.ChatMessageRepository
 {
     public interface IChatMessageRepository : IPostgresRepository<ChatMessage, Guid>
     {
-        Task<ChatMessage> GetByIdAsync(Guid id);
-        Task UpdateAsync(ChatMessage message);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using TrainingProgram.Entities.IEntity;
+﻿using TrainingProgram.Entities.ChatEntity;
+using TrainingProgram.Entities.IEntity;
 
 namespace Trainingprogram.RepositoriesAbstractions.PostgresRepository
 {
@@ -102,5 +103,8 @@ namespace Trainingprogram.RepositoriesAbstractions.PostgresRepository
         /// Сохранить изменения.
         /// </summary>
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
+
+        Task<ChatMessage> GetByIdAsync(Guid messageId);
+        Task UpdateAsync(ChatMessage message);
     }
 }

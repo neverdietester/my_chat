@@ -16,6 +16,7 @@ namespace TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositorie
             _entitySet = Context.Set<T>();
         }
 
+
         #region Get
 
         /// <summary>
