@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.3.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\trainingprogram.Contracts\Trainingprogram.Contracts.csproj" />
+    <ProjectReference Include="..\TrainingProgram.Infrastructure.MongoEntityFramework\TrainingProgram.Infrastructure.MongoCourse.csproj" />
+    <ProjectReference Include="..\TrainingProgram.Services.CourseManager.CourseManagerService\TrainingProgram.Services.CourseManagerService.csproj" />
+  </ItemGroup>
+
+</Project>
