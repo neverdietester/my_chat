@@ -1,5 +1,5 @@
+using ChatUsers.WebAPI;
 using TrainingProgram.Infrastructure.PostgresChat;
-using TrainingProgram.WebAPI;
 
 
 public class Program
@@ -19,7 +19,7 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
 
-                webBuilder.UseStartup<Startup>();
+                webBuilder.UseStartup<ChatUsers.WebAPI.Startup>();
                 webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                 {
                 });

@@ -2,7 +2,7 @@
 using Trainingprogram.Contracts.Chat;
 using Trainingprogram.Services.Abstractions.ChatMessage;
 
-namespace Trainingprogram.Controllers.Chat
+namespace ChatUsers.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/chat/messages")]

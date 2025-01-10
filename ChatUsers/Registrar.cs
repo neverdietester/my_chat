@@ -20,6 +20,7 @@ namespace ChatUsers.WebAPI
         private static IServiceCollection InstallServices(this IServiceCollection serviceCollection)
         {
             serviceCollection
+                .AddHttpContextAccessor()
                 .AddTransient<IChatMessageService, ChatMessageService>();
 
             return serviceCollection;

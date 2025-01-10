@@ -6,7 +6,7 @@ using MongoDB.Bson;
 using TrainingProgram.Infrastructure.PostgresChat;
 using TrainingProgram.Services.OAuth.mapping;
 
-namespace TrainingProgram.WebAPI
+namespace ChatUsers.WebAPI
 {
     public class Startup
     {
@@ -20,7 +20,7 @@ namespace TrainingProgram.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
             // Регистрация DbContext
             services.AddDbContext<DbContextPostgressChat>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
