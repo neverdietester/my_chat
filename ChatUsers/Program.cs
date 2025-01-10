@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using System.Runtime.CompilerServices;
 using TrainingProgram.Infrastructure.PostgresChat;
+using TrainingProgram.WebAPI;
 
 
 public class Program

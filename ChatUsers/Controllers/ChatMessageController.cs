@@ -31,12 +31,12 @@ namespace Trainingprogram.Controllers.Chat
             return Ok(messages);
         }
 
-        [HttpPut("{id}/read")]
-        public async Task<IActionResult> MarkMessageAsRead(Guid id)
-        {
-            await _chatMessageService.MarkAsReadAsync(id);
-            return NoContent();
-        }
+        //[HttpPut("{id}/read")]
+        //public async Task<IActionResult> MarkMessageAsRead(Guid id)
+        //{
+        //    await _chatMessageService.MarkAsReadAsync(id);
+        //    return NoContent();
+        //}
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ChatMessageDto>> GetMessageById(Guid id)

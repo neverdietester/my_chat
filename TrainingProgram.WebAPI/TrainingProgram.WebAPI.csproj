@@ -41,7 +41,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainingProgram.Infrastructure.EntityFramework\TrainingProgram.Infrastructure.PostgresIdentity.csproj" />
+    <ProjectReference Include="..\TrainingProgram.Infrastructure.PostgresChat\TrainingProgram.Infrastructure.PostgresChat.csproj" />
     <ProjectReference Include="..\trainingprogram.services.administration\Trainingprogram.services.Administration.csproj" />
+    <ProjectReference Include="..\Trainingprogram.services.Chat\Trainingprogram.services.Chat.csproj" />
     <ProjectReference Include="..\TrainingProgram.Services.OAuth\TrainingProgram.Services.OAuth.csproj" />
     <ProjectReference Include="..\trainingprogram.Services\trainingprogram.Services.Abstractions.csproj" />
   </ItemGroup>

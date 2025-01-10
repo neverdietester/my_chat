@@ -20,7 +20,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Npgsql" Version="8.0.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
   </ItemGroup>
 
@@ -32,6 +32,8 @@
     <ProjectReference Include="..\TrainingProgram.Entities\TrainingProgram.Entities.csproj" />
     <ProjectReference Include="..\TrainingProgram.Infrastructure.PostgresChat\TrainingProgram.Infrastructure.PostgresChat.csproj" />
     <ProjectReference Include="..\Trainingprogram.services.Chat\Trainingprogram.services.Chat.csproj" />
+    <ProjectReference Include="..\TrainingProgram.Services.OAuth\TrainingProgram.Services.OAuth.csproj" />
+    <ProjectReference Include="..\TrainingProgram.WebAPI\TrainingProgram.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

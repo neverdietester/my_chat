@@ -44,17 +44,17 @@ namespace Trainingprogram.services.Chat
             return _mapper.Map<ChatMessageDto>(ChatMessage);
         }
 
-        public async Task MarkAsReadAsync(Guid messageId)
-        {
-            var chatMessage = await chatMessageRepository.GetByIdAsync(messageId);
-            if (chatMessage == null)
-            {
-                throw new Exception("Сообщение не найдено");
-            }
+        //public async Task MarkAsReadAsync(Guid messageId)
+        //{
+        //    var chatMessage = await chatMessageRepository.GetByIdAsync(messageId);
+        //    if (chatMessage == null)
+        //    {
+        //        throw new Exception("Сообщение не найдено");
+        //    }
 
-            chatMessage.ReadAt = DateTime.UtcNow;
-            await chatMessageRepository.UpdateAsync(chatMessage);
-        }
+        //    chatMessage.ReadAt = DateTime.UtcNow;
+        //    await chatMessageRepository.UpdateAsync(chatMessage);
+        //}
 
         public async Task SaveAsync()
         {

@@ -104,7 +104,7 @@ namespace Trainingprogram.RepositoriesAbstractions.PostgresRepository
         /// </summary>
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
 
-        Task<ChatMessage> GetByIdAsync(Guid messageId);
-        Task UpdateAsync(ChatMessage message);
+        //Task<ChatMessage> GetByIdAsync(Guid messageId);
+        //Task UpdateAsync(ChatMessage message);
     }
 }

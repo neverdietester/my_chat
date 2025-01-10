@@ -13,6 +13,6 @@ namespace Trainingprogram.Services.Abstractions.ChatMessage
         Task<IEnumerable<ChatMessageDto>> GetByChatRoomIdAsync(Guid chatRoomId);
         Task AddAsync(ChatMessageDto message);
         Task SaveAsync();
-        Task MarkAsReadAsync(Guid messageId);
+        //Task MarkAsReadAsync(Guid messageId);
     }
 }

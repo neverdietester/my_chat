@@ -1,15 +1,27 @@
-﻿using MassTransit;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
+using AutoMapper;
+using MassTransit;
+using MongoDB.Bson;
 using TrainingProgram.Entities.Settings;
+using TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositories.Implementations.ChatManager;
+using TrainingProgram.Infrastructure.PostgresChat;
+using Trainingprogram.RepositoriesAbstractions.Chat.ChatMessageRepository;
+using Trainingprogram.RepositoriesAbstractions.Chat.ChatRoomRepository;
+using Trainingprogram.Services.Abstractions.ChatMessage;
+using Trainingprogram.services.Chat;
+using TrainingProgram.Services.OAuth.mapping;
 
-namespace ChatUsers.WebAPI
+namespace TrainingProgram.WebAPI
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,12 +31,21 @@ namespace ChatUsers.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddServices(Configuration);
+            // Регистрация DbContext
+            services.AddDbContext<DbContextPostgressChat>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Регистрация репозиториев
+            services.AddScoped<IChatMessageRepository, ChatMessageRespository>();
+            services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
+            services.AddScoped<IChatMessageService, ChatMessageService>();
+
+            // Добавление других сервисов, контроллеров и Swagger
             services.AddControllers();
-            var test = Configuration["SMTP:test"];
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                options.MapType<ObjectId>(() => new OpenApiSchema { Type = "string", Format = "string" });
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     In = ParameterLocation.Header,
@@ -34,7 +55,6 @@ namespace ChatUsers.WebAPI
                     BearerFormat = "JWT",
                     Scheme = "Bearer"
                 });
-
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -47,11 +67,12 @@ namespace ChatUsers.WebAPI
                             },
                             Name = "Bearer",
                             In = ParameterLocation.Header
-                        },
-                        Array.Empty<string>()
+                        }, Array.Empty<string>()
                     }
                 });
             });
+
+            // Настройка MassTransit
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
@@ -61,18 +82,33 @@ namespace ChatUsers.WebAPI
                         h.Username("guest");
                         h.Password("guest");
                     });
-
                     cfg.ConfigureEndpoints(context);
                 });
             });
+
+            // Настройка аутентификации и авторизации
             AddAuthenticationAndAuthorization(services);
+
+            // Настройка AutoMapper
+            InstallAutomapper(services);
         }
 
+        private static IServiceCollection InstallAutomapper(IServiceCollection services)
+        {
+            services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
+            return services;
+        }
 
-        /// <summary>
-        /// сервис аутинфикации и авторизации
-        /// </summary>
-        /// <param name="services"></param>
+        private static MapperConfiguration GetMapperConfiguration()
+        {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<UserMapper>();
+            });
+            configuration.AssertConfigurationIsValid();
+            return configuration;
+        }
+
         public void AddAuthenticationAndAuthorization(IServiceCollection services)
         {
             services.AddAuthentication(options =>
@@ -86,6 +122,7 @@ namespace ChatUsers.WebAPI
                 var jwtKey = options.JwtKey;
                 var issuer = options.Issuer;
                 var audience = options.Audience;
+
                 o.Authority = options.Authority;
                 o.RequireHttpsMetadata = false;
                 o.TokenValidationParameters = new TokenValidationParameters()
@@ -99,8 +136,8 @@ namespace ChatUsers.WebAPI
                     ValidateIssuerSigningKey = true
                 };
             });
-
         }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -115,9 +152,7 @@ namespace ChatUsers.WebAPI
 
             if (!env.IsProduction())
             {
-
                 app.UseSwagger();
-                app.UseSwaggerUI();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
