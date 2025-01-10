@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Trainingprogram.Contracts.Chat;
 using Trainingprogram.Services.Abstractions.ChatMessage;
 
@@ -38,7 +36,7 @@ namespace Trainingprogram.Controllers.Chat
         //    return NoContent();
         //}
 
-        [HttpGet("{id}")]
+        [HttpGet("message/{id}")]
         public async Task<ActionResult<ChatMessageDto>> GetMessageById(Guid id)
         {
             var message = await _chatMessageService.GetByIdAsync(id);

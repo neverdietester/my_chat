@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trainingprogram.Contracts.Chat;
+﻿using Trainingprogram.Contracts.Chat;
 
 namespace Trainingprogram.Services.Abstractions.ChatMessage
 {

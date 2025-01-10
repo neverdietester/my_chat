@@ -1,21 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using MassTransit;
 using MongoDB.Bson;
-using TrainingProgram.Entities.Settings;
-using TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositories.Implementations.ChatManager;
 using TrainingProgram.Infrastructure.PostgresChat;
-using Trainingprogram.RepositoriesAbstractions.Chat.ChatMessageRepository;
-using Trainingprogram.RepositoriesAbstractions.Chat.ChatRoomRepository;
-using Trainingprogram.Services.Abstractions.ChatMessage;
-using Trainingprogram.services.Chat;
 using TrainingProgram.Services.OAuth.mapping;
 
 namespace TrainingProgram.WebAPI
@@ -32,16 +20,13 @@ namespace TrainingProgram.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+           
             // Регистрация DbContext
             services.AddDbContext<DbContextPostgressChat>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            //// Регистрация репозиториев
-            //services.AddScoped<IChatMessageRepository, ChatMessageRespository>();
-            //services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
-            //services.AddScoped<IChatMessageService, ChatMessageService>();
-
             // Добавление других сервисов, контроллеров и Swagger
+            services.AddServices(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {

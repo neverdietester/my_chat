@@ -4,7 +4,6 @@ using Trainingprogram.RepositoriesAbstractions.Chat.ChatRoomRepository;
 using Trainingprogram.RepositoriesAbstractions.Chat.ChatUserRepository;
 using Trainingprogram.services.Chat;
 using Trainingprogram.Services.Abstractions.ChatMessage;
-using TrainingProgram.Entities.ChatEntity;
 using TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositories.Implementations.ChatManager;
 
 namespace ChatUsers.WebAPI
@@ -28,7 +27,7 @@ namespace ChatUsers.WebAPI
         private static IServiceCollection InstallRepositories(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddTransient<IChatMessageRepository, ChatMessageRespository>()
+                .AddTransient<IChatMessageRepository, ChatMessageRepository>()
                 .AddTransient<IUserChatRepository, UserChatRepository>()
                 .AddTransient<IChatRoomRepository, ChatRoomRepository>()
                 .AddTransient<IUserChatRoomRepository, UserChatRoomRepository>();
