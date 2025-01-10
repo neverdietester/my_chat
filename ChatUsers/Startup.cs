@@ -20,7 +20,7 @@ namespace ChatUsers.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Добавление других сервисов, контроллеров и Swagger
-            //services.AddServices(Configuration);
+            services.AddServices(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
