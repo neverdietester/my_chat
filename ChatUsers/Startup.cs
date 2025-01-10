@@ -29,16 +29,17 @@ namespace TrainingProgram.WebAPI
 
         private IConfiguration Configuration { get; }
 
+
         public void ConfigureServices(IServiceCollection services)
         {
             // Регистрация DbContext
             services.AddDbContext<DbContextPostgressChat>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Регистрация репозиториев
-            services.AddScoped<IChatMessageRepository, ChatMessageRespository>();
-            services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
-            services.AddScoped<IChatMessageService, ChatMessageService>();
+            //// Регистрация репозиториев
+            //services.AddScoped<IChatMessageRepository, ChatMessageRespository>();
+            //services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
+            //services.AddScoped<IChatMessageService, ChatMessageService>();
 
             // Добавление других сервисов, контроллеров и Swagger
             services.AddControllers();
@@ -46,15 +47,15 @@ namespace TrainingProgram.WebAPI
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 options.MapType<ObjectId>(() => new OpenApiSchema { Type = "string", Format = "string" });
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Введите пожалуйста валидный токен",
-                    Name = "Авторизация",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
-                });
+                //options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                //{
+                //    In = ParameterLocation.Header,
+                //    Description = "Введите пожалуйста валидный токен",
+                //    Name = "Авторизация",
+                //    Type = SecuritySchemeType.Http,
+                //    BearerFormat = "JWT",
+                //    Scheme = "Bearer"
+                //});
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -86,8 +87,8 @@ namespace TrainingProgram.WebAPI
                 });
             });
 
-            // Настройка аутентификации и авторизации
-            AddAuthenticationAndAuthorization(services);
+            //// Настройка аутентификации и авторизации
+            //AddAuthenticationAndAuthorization(services);
 
             // Настройка AutoMapper
             InstallAutomapper(services);
@@ -109,34 +110,34 @@ namespace TrainingProgram.WebAPI
             return configuration;
         }
 
-        public void AddAuthenticationAndAuthorization(IServiceCollection services)
-        {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                var options = Configuration.GetSection(JwtSettings.DefaultSection).Get<JwtSettings>();
-                var jwtKey = options.JwtKey;
-                var issuer = options.Issuer;
-                var audience = options.Audience;
+        //public void AddAuthenticationAndAuthorization(IServiceCollection services)
+        //{
+        //    services.AddAuthentication(options =>
+        //    {
+        //        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    }).AddJwtBearer(o =>
+        //    {
+        //        var options = Configuration.GetSection(JwtSettings.DefaultSection).Get<JwtSettings>();
+        //        var jwtKey = options.JwtKey;
+        //        var issuer = options.Issuer;
+        //        var audience = options.Audience;
 
-                o.Authority = options.Authority;
-                o.RequireHttpsMetadata = false;
-                o.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidIssuer = issuer,
-                    ValidAudience = audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
-                };
-            });
-        }
+        //        o.Authority = options.Authority;
+        //        o.RequireHttpsMetadata = false;
+        //        o.TokenValidationParameters = new TokenValidationParameters()
+        //        {
+        //            ValidIssuer = issuer,
+        //            ValidAudience = audience,
+        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+        //            ValidateAudience = true,
+        //            ValidateIssuer = true,
+        //            ValidateLifetime = true,
+        //            ValidateIssuerSigningKey = true
+        //        };
+        //    });
+        //}
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -153,11 +154,7 @@ namespace TrainingProgram.WebAPI
             if (!env.IsProduction())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                    c.RoutePrefix = string.Empty;
-                });
+                app.UseSwaggerUI();
             }
 
             app.UseEndpoints(endpoints =>
