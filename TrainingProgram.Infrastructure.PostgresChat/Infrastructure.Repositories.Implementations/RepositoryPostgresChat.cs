@@ -7,7 +7,7 @@ namespace TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositorie
     public abstract class RepositoryPostgresChat<T, TPrimaryKey> : IPostgresRepository<T, TPrimaryKey> where T
           : class, IEntity<TPrimaryKey>
     {
-        protected readonly DbContext Context;
+        protected readonly Microsoft.EntityFrameworkCore.DbContext Context;
         private readonly DbSet<T> _entitySet;
 
         protected RepositoryPostgresChat(DbContext context)
