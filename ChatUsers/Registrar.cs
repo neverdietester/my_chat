@@ -4,6 +4,7 @@ using Trainingprogram.RepositoriesAbstractions.Chat.ChatRoomRepository;
 using Trainingprogram.RepositoriesAbstractions.Chat.ChatUserRepository;
 using Trainingprogram.services.Chat;
 using Trainingprogram.Services.Abstractions.ChatMessage;
+using TrainingProgram.Infrastructure.PostgresChat;
 using TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositories.Implementations.ChatManager;
 
 namespace ChatUsers.WebAPI
@@ -14,6 +15,7 @@ namespace ChatUsers.WebAPI
         {
             services.AddSingleton((IConfigurationRoot)configuration)
                     .InstallServices()
+                    .ConfigureContextPostgres(configuration)
                     .InstallRepositories();
             return services;
         }

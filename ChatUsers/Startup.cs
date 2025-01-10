@@ -22,8 +22,8 @@ namespace ChatUsers.WebAPI
         {
 
             // Регистрация DbContext
-            services.AddDbContext<DbContextPostgressChat>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<DbContextPostgressChat>(options =>
+            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             // Добавление других сервисов, контроллеров и Swagger
             services.AddServices(Configuration);
