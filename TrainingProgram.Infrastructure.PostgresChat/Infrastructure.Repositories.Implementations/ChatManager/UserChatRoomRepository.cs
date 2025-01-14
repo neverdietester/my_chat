@@ -6,7 +6,7 @@ namespace TrainingProgram.Infrastructure.PostgresChat.Infrastructure.Repositorie
 {
     public class UserChatRoomRepository : RepositoryPostgresChat<UserChatRoom, Guid>, IUserChatRoomRepository
     {
-        public UserChatRoomRepository(DbContext context) : base(context)
+        public UserChatRoomRepository(DbContextPostgressChat context) : base(context)
         {
         }
     }
